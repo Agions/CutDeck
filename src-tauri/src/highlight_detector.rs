@@ -379,11 +379,11 @@ impl HighlightDetector {
             .collect();
 
         // Sort by score and take top N
-        merged
-            .into_iter()
-            .sorted_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal))
-            .take(top_n)
-            .collect()
+        {
+            let mut v: Vec<_> = merged.into_iter().collect();
+            v.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
+            v.into_iter().take(top_n).collect()
+        }
     }
 
     fn extract_audio_pcm(&self, audio_path: &str) -> Result<Vec<f32>, String> {
@@ -492,22 +492,4 @@ fn chrono_like_timestamp() -> u128 {
         .duration_since(std::time::UNIX_EPOCH)
         .map(|d| d.as_millis())
         .unwrap_or(0)
-}
-
-// Extension trait for sorting
-trait Sorted {
-    fn sorted_by<F>(self, cmp: F) -> Self
-    where
-        F: FnMut(&Self::Item, &Self::Item) -> std::cmp::Ordering;
-}
-
-impl<T: Iterator> Sorted for T {
-    fn sorted_by<F>(mut self, cmp: F) -> Self
-    where
-        F: FnMut(&T::Item, &T::Item) -> std::cmp::Ordering
-    {
-        let mut v: Vec<_> = self.collect();
-        v.sort_by(cmp);
-        v.into_iter()
-    }
 }
