@@ -73,7 +73,7 @@ impl SegmentClassifier {
     /// Returns `true` if a scene change occurs within ±500 ms of `time_ms`.
     pub fn is_scene_at(scene_changes: &[u64], time_ms: u64) -> bool {
         scene_changes.iter().any(|&sc| {
-            (sc >= time_ms && sc <= time_ms) || (sc.saturating_sub(500) <= time_ms && sc + 500 >= time_ms)
+            sc == time_ms || (sc.saturating_sub(500) <= time_ms && sc + 500 >= time_ms)
         })
     }
 }

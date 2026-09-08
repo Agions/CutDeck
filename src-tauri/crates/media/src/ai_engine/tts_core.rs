@@ -160,7 +160,7 @@ pub async fn synthesize_speech_batch_impl(
     // 先推 concurrency 个任务
     for _ in 0..concurrency {
         if let Some(seg) = iter.next() {
-            futures.push(synthesize_one_with_retry(seg.clone(), max_retries, db.clone()));
+            futures.push(synthesize_one_with_retry(seg.clone(), max_retries, db));
         }
     }
 
@@ -169,7 +169,7 @@ pub async fn synthesize_speech_batch_impl(
         results.push(res);
         // 流水线：每完成一个就推入下一个，保持并发数稳定
         if let Some(seg) = iter.next() {
-            futures.push(synthesize_one_with_retry(seg.clone(), max_retries, db.clone()));
+            futures.push(synthesize_one_with_retry(seg.clone(), max_retries, db));
         }
     }
 

@@ -20,7 +20,7 @@ pub fn extract_keyframes_impl(
     let pattern = temp_dir.join("frame_%04d.jpg");
 
     let output = Command::new(ffmpeg_path)
-        .args(&[
+        .args([
             "-y", "-i", path,
             "-vf", &format!("select='gt(scene\\,{:.2})',scale=iw:-1,qscale=v(2)", scene_threshold),
             "-frames:v", &max_frames.to_string(),

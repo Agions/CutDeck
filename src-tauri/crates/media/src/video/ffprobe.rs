@@ -103,7 +103,6 @@ fn validate_ffprobe_args(args: &[String]) -> Result<(), String> {
 }
 
 /// Run ffprobe with arbitrary args, returns raw stdout.
-
 pub async fn run_ffprobe(args: Vec<String>) -> Result<String, String> {
     validate_ffprobe_args(&args)?;
     let output = tokio::process::Command::new(ffprobe_binary())

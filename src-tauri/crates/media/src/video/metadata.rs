@@ -6,7 +6,7 @@ use std::process::Command;
 /// Extract full metadata (streams, format, duration, etc.) from a video file
 pub fn probe_metadata(path: &str, ffprobe_path: &str) -> Result<serde_json::Value, String> {
     let output = Command::new(ffprobe_path)
-        .args(&[
+        .args([
             "-v", "error",
             "-show_format", "-show_streams",
             "-of", "json",

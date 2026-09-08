@@ -3,7 +3,7 @@
 use crate::binary::ffmpeg_binary;
 use models::AutonomousOverlayMarker;
 use crate::utils::cmd_err;
-use std::path::PathBuf;
+use std::path::Path;
 use std::process::Command;
 
 /// Normalize SRT timestamps for burn-in (shift to absolute start)
@@ -13,7 +13,7 @@ pub fn normalize_srt_for_burnin(srt: &str, _duration: f64) -> String {
 }
 
 /// Burn SRT subtitle into video using FFmpeg
-pub fn burn_subtitle_ffmpeg(input: &PathBuf, output: &str, srt_path: &PathBuf) -> Result<(), String> {
+pub fn burn_subtitle_ffmpeg(input: &Path, output: &str, srt_path: &Path) -> Result<(), String> {
     let ffmpeg_bin = ffmpeg_binary();
     let mut cmd = Command::new(&ffmpeg_bin);
     cmd.arg("-y").arg("-i").arg(input).arg("-vf")

@@ -31,7 +31,6 @@ pub fn extract_audio_to_wav(video_path: &str, output_wav: &Path) -> Result<(), S
 }
 
 /// Transcribe audio using faster-whisper
-
 pub async fn transcribe_audio(
     app: tauri::AppHandle,
     audio_path: String,

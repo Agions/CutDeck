@@ -7,7 +7,7 @@
 //! - `list_recoverable_projects` returns any recoverable autosave files for startup recovery UI.
 //! - `recover_autosave` renames the autosave back to the main project file.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use tauri::Manager;
 use tokio::fs as tokio_fs;
 
@@ -17,13 +17,13 @@ mod tests;
 // ─── Path helpers ─────────────────────────────────────────────────────────────
 
 /// Returns the autosave path for a given project_id.
-pub fn autosave_path(story_fab_dir: &PathBuf, project_id: &str) -> PathBuf {
-    story_fab_dir.join(format!("{}.autosave.json", project_id))
+pub fn autosave_path(fablr_dir: &Path, project_id: &str) -> PathBuf {
+    fablr_dir.join(format!("{}.autosave.json", project_id))
 }
 
 /// Returns the main project file path for a given project_id.
-pub fn project_path(story_fab_dir: &PathBuf, project_id: &str) -> PathBuf {
-    story_fab_dir.join(format!("{}.json", project_id))
+pub fn project_path(fablr_dir: &Path, project_id: &str) -> PathBuf {
+    fablr_dir.join(format!("{}.json", project_id))
 }
 
 // ─── Directory resolution ─────────────────────────────────────────────────────

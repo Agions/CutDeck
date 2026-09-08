@@ -23,7 +23,7 @@ use media::utils::pcm_samples_from_wav;
 /// without depending on `#[cfg(test)]` internals.
 fn wav_bytes(samples: &[i16]) -> Vec<u8> {
     let mut bytes = Vec::with_capacity(44 + samples.len() * 2);
-    bytes.extend(std::iter::repeat(0u8).take(44));
+    bytes.extend(std::iter::repeat_n(0u8, 44));
     for s in samples {
         bytes.extend_from_slice(&s.to_le_bytes());
     }

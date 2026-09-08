@@ -32,7 +32,7 @@ mod tests {
         // 44 zero bytes for the standard header (RIFF + fmt + data chunks).
         // pcm_samples_from_wav only checks the *length* of the prefix and
         // does not parse its content, so zero bytes are fine.
-        bytes.extend(std::iter::repeat(0u8).take(44));
+        bytes.extend(std::iter::repeat_n(0u8, 44));
         for s in samples {
             bytes.extend_from_slice(&s.to_le_bytes());
         }

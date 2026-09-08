@@ -122,7 +122,6 @@ async fn artifacts_dir(app: &AppHandle, production_id: &str) -> Result<std::path
 }
 
 /// L0 全链路编排命令：元数据 → 场景 → 字幕 → 高光 → storyline.json 落盘
-
 pub async fn analyze_production(
     app: AppHandle,
     input: AnalyzeProductionInput,

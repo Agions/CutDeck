@@ -113,7 +113,6 @@ impl<'a> TranscodeBuilder<'a> {
 /// payloads before/after the blocking ffmpeg invocation. The `spawn_blocking`
 /// hop keeps the Tauri main thread and Tokio worker pool responsive while
 /// the multi-minute encode runs (see Tauri discussion #10329).
-
 pub async fn transcode_with_crop(
     app: AppHandle,
     limiter: State<'_, ResourceLimiter>,
@@ -189,7 +188,6 @@ pub async fn transcode_with_crop(
 
 /// Export video — full-featured video export with optional subtitle burn-in.
 /// Returns { output_path, duration, file_size }.
-
 pub async fn export_video(
     limiter: State<'_, ResourceLimiter>,
     input: ExportVideoInput,

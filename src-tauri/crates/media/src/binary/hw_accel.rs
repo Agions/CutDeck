@@ -123,7 +123,7 @@ pub fn detect_hw_accel() -> HwAccel {
     #[cfg(target_os = "macos")]
     {
         log::info!("[Fablr] Detected macOS — using VideoToolbox");
-        return HwAccel::VideoToolbox;
+        HwAccel::VideoToolbox
     }
 
     #[cfg(not(target_os = "macos"))]

@@ -8,7 +8,7 @@ pub async fn get_audio_duration(audio_path: String) -> Result<f64, String> {
     let ffprobe_bin = ffprobe_binary();
 
     let output = TokioCommand::new(&ffprobe_bin)
-        .args(&[
+        .args([
             "-v", "error",
             "-show_entries", "format=duration",
             "-of", "default=noprint_wrappers=1:nokey=1",

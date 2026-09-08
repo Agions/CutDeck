@@ -1,9 +1,7 @@
 //! 数据库单元测试
 
-#[cfg(test)]
-mod tests {
-    use crate::*;
-    use tempfile::tempdir;
+use crate::*;
+use tempfile::tempdir;
 
     fn fresh_db() -> Db {
         let dir = tempdir().expect("create temp dir");
@@ -271,4 +269,3 @@ mod tests {
         db.delete_project("p1").unwrap();
         assert!(db.get_assembly_kit("p1").unwrap().is_none());
     }
-}

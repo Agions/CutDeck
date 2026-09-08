@@ -8,6 +8,12 @@ pub struct SmartSegmenter {
     ffmpeg_path: String,
 }
 
+impl Default for SmartSegmenter {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl SmartSegmenter {
     pub fn new() -> Self {
         Self {
@@ -97,7 +103,7 @@ impl SmartSegmenter {
             .join(format!("fablr_seg_audio_{}.wav", chrono_like_timestamp()));
 
         let output = Command::new(&self.ffmpeg_path)
-            .args(&[
+            .args([
                 "-y", "-i", audio_path,
                 "-vn",
                 "-acodec", "pcm_s16le",

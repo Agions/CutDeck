@@ -42,7 +42,7 @@ pub async fn mix_audio(input: MixAudioInput) -> Result<String, String> {
 
         if offset > 0.0 {
             let delay_ms = (offset * 1000.0) as i64;
-            cmd.args(&["-filter_complex",
+            cmd.args(["-filter_complex",
                 &format!(
                     "[0:a]volume={bg}[bg];[1:a]volume={tts},adelay={delay}|{delay}[tts];[bg][tts]amix=inputs=2:duration=first[mixed]",
                     bg = bg_vol, tts = tts_vol, delay = delay_ms
@@ -51,7 +51,7 @@ pub async fn mix_audio(input: MixAudioInput) -> Result<String, String> {
                 "-map", "[mixed]",
             ]);
         } else {
-            cmd.args(&["-filter_complex",
+            cmd.args(["-filter_complex",
                 &format!(
                     "[0:a]volume={bg}[bg];[1:a]volume={tts}[tts];[bg][tts]amix=inputs=2:duration=first[mixed]",
                     bg = bg_vol, tts = tts_vol
@@ -63,10 +63,10 @@ pub async fn mix_audio(input: MixAudioInput) -> Result<String, String> {
     } else {
         cmd.arg("-i").arg(&input.video_path);
         cmd.arg("-i").arg(&input.tts_audio_path);
-        cmd.args(&["-map", "0:v", "-map", "1:a", "-c:v", "copy"]);
+        cmd.args(["-map", "0:v", "-map", "1:a", "-c:v", "copy"]);
     }
 
-    cmd.args(&["-c:a", "aac", "-movflags", "+faststart", "-y"]);
+    cmd.args(["-c:a", "aac", "-movflags", "+faststart", "-y"]);
     cmd.arg(&input.output_path);
 
     let output = cmd
@@ -91,7 +91,7 @@ pub(crate) fn parse_has_audio(ffprobe_stderr: &str) -> bool {
 /// 检查视频是否包含音轨
 async fn check_video_has_audio(ffmpeg_bin: &str, video_path: &str) -> Result<bool, String> {
     let output = TokioCommand::new(ffmpeg_bin)
-        .args(&["-i", video_path, "-t", "0", "-f", "null", "-"])
+        .args(["-i", video_path, "-t", "0", "-f", "null", "-"])
         .output()
         .await
         .map_err(|e| format!("ffprobe check failed: {e}"))?;

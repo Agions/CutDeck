@@ -166,7 +166,7 @@ pub async fn list_crashes(app: AppHandle) -> Result<Vec<CrashSummary>, String> {
     }
 
     // Newest first.
-    summaries.sort_by(|a, b| b.timestamp.cmp(&a.timestamp));
+    summaries.sort_by_key(|b| std::cmp::Reverse(b.timestamp));
     Ok(summaries)
 }
 
@@ -256,11 +256,10 @@ pub async fn clear_crashes(app: AppHandle) -> Result<usize, String> {
     while let Some(entry) = next {
         let path = entry.path();
         if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-            if parse_crash_timestamp(name).is_some() {
-                if tokio_fs::remove_file(&path).await.is_ok() {
+            if parse_crash_timestamp(name).is_some()
+                && tokio_fs::remove_file(&path).await.is_ok() {
                     removed += 1;
                 }
-            }
         }
         next = entries
             .next_entry()

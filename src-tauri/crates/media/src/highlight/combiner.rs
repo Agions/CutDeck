@@ -16,7 +16,7 @@ pub async fn get_highlights(
 ) -> Vec<HighlightSegment> {
     let opts = options.clone();
     let top_n = opts.top_n.unwrap_or(10);
-    let min_duration_ms = opts.min_duration_ms.unwrap_or(500) as u64;
+    let min_duration_ms = opts.min_duration_ms.unwrap_or(500);
 
     let audio_detector = AudioDetector::new();
 
@@ -99,7 +99,7 @@ fn extract_audio_path(video_path: &str, _detector: &AudioDetector) -> Result<Str
     let ffmpeg_path = resolve_binary_path("ffmpeg");
 
     let output = Command::new(&ffmpeg_path)
-        .args(&[
+        .args([
             "-y", "-i", video_path,
             "-vn",
             "-acodec", "pcm_s16le",

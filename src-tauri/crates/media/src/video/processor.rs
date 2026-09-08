@@ -92,7 +92,7 @@ impl VideoProcessor {
         let concat_file = write_concat_file(inputs)?;
 
         let result = tokio::process::Command::new(&self.ffmpeg_path)
-            .args(&[
+            .args([
                 "-y", "-f", "concat", "-safe", "0",
                 "-i", &concat_file.to_string_lossy(),
                 "-c", "copy",

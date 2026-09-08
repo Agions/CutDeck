@@ -29,19 +29,16 @@ impl std::fmt::Display for LLMProvider {
 /// 脚本风格
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
+#[derive(Default)]
 pub enum ScriptStyle {
     Humorous,   // 搞笑吐槽
     Emotional,  // 煽情动人
     Suspense,   // 悬疑紧张
     Informative, // 干货分享
+    #[default]
     Casual,     // 轻松随意
 }
 
-impl Default for ScriptStyle {
-    fn default() -> Self {
-        ScriptStyle::Casual
-    }
-}
 
 /// 脚本生成输入
 #[derive(Debug, Clone, Deserialize)]

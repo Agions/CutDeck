@@ -13,7 +13,7 @@ use models::AutonomousRenderInput;
 use crate::utils::{
     chrono_like_timestamp, resource_error_to_user_message, ResourceLimiter,
 };
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 pub mod postprocess;
 
@@ -59,7 +59,7 @@ async fn render_autonomous_cut_impl(
         .filter(|segment| segment.end > segment.start)
         .collect::<Vec<_>>();
 
-    let transition = input.transition.as_ref().map(String::as_str).unwrap_or("cut");
+    let transition = input.transition.as_deref().unwrap_or("cut");
     let transition_duration = input.transition_duration.unwrap_or(DEFAULT_TRANSITION_DURATION)
         .clamp(0.0, MAX_TRANSITION_DURATION);
 
@@ -114,7 +114,7 @@ async fn render_autonomous_cut_impl(
 fn apply_post_processing(
     merged_input: &PathBuf,
     input: &mut AutonomousRenderInput,
-    temp_root: &PathBuf,
+    temp_root: &Path,
     final_output_path: &str,
 ) -> Result<(), String> {
     let use_overlay = input.overlay_markers.as_ref().map(Vec::is_empty).unwrap_or(true);

@@ -277,9 +277,9 @@ fn start_phase_state(job: &PipelineJob, phase: &JobPhase) -> PipelineJob {
         return job.clone();
     }
     let mut new_status = job.phase_status.clone();
-    new_status.insert(phase.clone(), PhaseRunState::Running);
+    new_status.insert(*phase, PhaseRunState::Running);
     PipelineJob {
-        phase: phase.clone(),
+        phase: *phase,
         phase_status: new_status,
         error: None,
         updated_at: now_iso8601(),
@@ -296,11 +296,11 @@ fn complete_phase_state(
         return job.clone();
     }
     let mut new_status = job.phase_status.clone();
-    new_status.insert(phase.clone(), PhaseRunState::Done);
+    new_status.insert(*phase, PhaseRunState::Done);
     let order = JobPhase::ALL;
     let idx = order.iter().position(|p| p == phase).unwrap_or(0);
     let next_phase = order.get(idx + 1).cloned();
-    let new_phase = next_phase.clone().unwrap_or_else(|| phase.clone());
+    let new_phase = next_phase.unwrap_or(*phase);
     let mut updated = PipelineJob {
         phase: new_phase,
         phase_status: new_status,
@@ -329,7 +329,7 @@ fn retry_phase_state(job: &PipelineJob, phase: &JobPhase) -> PipelineJob {
         return job.clone();
     }
     let mut new_status = job.phase_status.clone();
-    new_status.insert(phase.clone(), PhaseRunState::Pending);
+    new_status.insert(*phase, PhaseRunState::Pending);
     PipelineJob {
         phase_status: new_status,
         error: None,
@@ -346,7 +346,7 @@ fn skip_phase_state(job: &PipelineJob, phase: &JobPhase) -> PipelineJob {
         return job.clone();
     }
     let mut new_status = job.phase_status.clone();
-    new_status.insert(phase.clone(), PhaseRunState::Skipped);
+    new_status.insert(*phase, PhaseRunState::Skipped);
     PipelineJob {
         phase_status: new_status,
         updated_at: now_iso8601(),

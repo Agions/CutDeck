@@ -19,7 +19,7 @@ pub fn generate_thumbnail_impl(
     let output = temp_dir.join("thumb.jpg");
 
     let result = Command::new(ffmpeg_path)
-        .args(&[
+        .args([
             "-y", "-ss", &format_time(time.max(0.0)), "-i", path,
             "-frames:v", "1", "-q:v", "2", "-vf", "scale=320:-1",
             &output.to_string_lossy(),

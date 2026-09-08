@@ -51,7 +51,7 @@ fn extract_segment_text(full_script: &str, index: usize, total: usize, _char_cou
         return String::new();
     }
 
-    let chars_per_segment = (total_chars + total - 1) / total;
+    let chars_per_segment = total_chars.div_ceil(total);
     let start = index * chars_per_segment;
     let end = (start + chars_per_segment).min(total_chars);
 

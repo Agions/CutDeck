@@ -76,7 +76,7 @@ pub async fn detect_smart_segments(
     let options = crate::segment::SegmentOptions {
         min_duration_ms: input.min_duration_ms,
         max_duration_ms: input.max_duration_ms,
-        scene_threshold: input.scene_threshold.map(|v| v as f32),
+        scene_threshold: input.scene_threshold,
         silence_threshold_db: input.silence_threshold_db,
         detect_dialogue: input.detect_dialogue,
         detect_transitions: input.detect_transitions,

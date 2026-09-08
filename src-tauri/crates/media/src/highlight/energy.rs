@@ -78,7 +78,7 @@ pub fn extract_pcm(
         std::env::temp_dir().join(format!("fablr_pcm_{}.wav", chrono_like_timestamp()));
 
     let output = Command::new(ffmpeg_path)
-        .args(&[
+        .args([
             "-y", "-i", audio_path, "-ac", "1", "-ar", "44100", "-f", "s16le",
             "-acodec", "pcm_s16le",
             &temp_wav.to_string_lossy(),

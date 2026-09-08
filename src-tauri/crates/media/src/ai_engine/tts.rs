@@ -11,7 +11,6 @@ pub async fn synthesize_speech(input: SynthesizeSpeechInput) -> Result<Synthesiz
 }
 
 /// 接受结构化 SSML 的合成入口（Stage 14.1）
-
 pub async fn synthesize_speech_ssml(
     doc: SsmlDocument,
     voice: String,
@@ -25,7 +24,6 @@ pub async fn synthesize_speech_ssml(
 /// 批量并发合成（Stage 14.2 + 14.5 缓存）
 /// - max_concurrency 默认 3，max_retries 默认 2
 /// - 自动启用 TTS 缓存：相同 (text/ssml + voice + speed + format + backend) 命中直接返回
-
 pub async fn synthesize_speech_batch(
     service: State<'_, ProjectService>,
     input: TtsBatchInput,

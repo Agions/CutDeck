@@ -267,6 +267,16 @@ fn sqlx_err(e: serde_json::Error) -> DbError {
     DbError::InvalidData(format!("serde_json: {}", e))
 }
 
+// 抑制 unused warnings
+#[allow(dead_code)]
+fn _silence_unused(_: ArtifactRow) {}
+#[allow(dead_code)]
+fn _silence_production() {
+    let _: Option<ProductionSource> = None;
+    let _: ProductionStatus = ProductionStatus::Draft;
+    let _: Option<Production> = None;
+}
+
 // ─── 单元测试 ──────────────────────────────────────────────
 
 #[cfg(test)]
@@ -344,14 +354,4 @@ mod tests {
     fn service_delete(svc: &ProjectService, id: &str) -> DbResult<()> {
         svc.db().delete_project(id)
     }
-}
-
-// 抑制 unused warnings
-#[allow(dead_code)]
-fn _silence_unused(_: ArtifactRow) {}
-#[allow(dead_code)]
-fn _silence_production() {
-    let _: Option<ProductionSource> = None;
-    let _: ProductionStatus = ProductionStatus::Draft;
-    let _: Option<Production> = None;
 }

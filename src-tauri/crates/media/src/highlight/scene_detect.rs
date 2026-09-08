@@ -27,7 +27,7 @@ impl SceneDetector {
         let top_n = options.top_n.unwrap_or(10);
 
         let stderr = Command::new(&self.ffmpeg_path)
-            .args(&[
+            .args([
                 "-hide_banner",
                 "-i",
                 video_path,

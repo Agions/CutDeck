@@ -4,7 +4,7 @@
 use crate::binary::{ffmpeg_binary, hw_accel, HwAccel};
 use models::AutonomousRenderSegment;
 use crate::utils::cmd_err;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use tokio::process::Command as TokioCommand;
 use tokio::sync::Semaphore;
@@ -13,7 +13,7 @@ use tokio::sync::Semaphore;
 pub async fn cut_segments_parallel(
     input_path: &str,
     segments: &[AutonomousRenderSegment],
-    temp_root: &PathBuf,
+    temp_root: &Path,
 ) -> Result<Vec<PathBuf>, String> {
     let ffmpeg_bin = ffmpeg_binary();
     let sem = Arc::new(Semaphore::new(8)); // MAX_CONCURRENT_SEGMENTS
@@ -24,7 +24,7 @@ pub async fn cut_segments_parallel(
         .map(|(index, segment)| {
             let ffmpeg_bin = ffmpeg_bin.clone();
             let input_path = input_path.to_string();
-            let temp_root = temp_root.clone();
+            let temp_root = temp_root.to_path_buf();
             let sem = Arc::clone(&sem);
             async move {
                 let _permit = sem.acquire_owned().await.expect("semaphore closed");

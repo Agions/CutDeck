@@ -9,6 +9,12 @@ pub struct SceneSegmenter {
     ffmpeg_path: String,
 }
 
+impl Default for SceneSegmenter {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl SceneSegmenter {
     pub fn new() -> Self {
         Self {
@@ -60,7 +66,7 @@ impl SceneSegmenter {
 
     pub fn detect_scene_changes(&self, video_path: &str, threshold: f32) -> Vec<u64> {
         let stderr = Command::new(&self.ffmpeg_path)
-            .args(&[
+            .args([
                 "-hide_banner",
                 "-i",
                 video_path,

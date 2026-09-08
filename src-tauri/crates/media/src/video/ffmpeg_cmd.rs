@@ -3,7 +3,6 @@
 use crate::binary::ffmpeg_binary;
 use crate::utils::{chrono_like_timestamp, format_time, cmd_err};
 use crate::video::processor::VideoProcessor;
-use serde::Deserialize;
 use std::path::PathBuf;
 use tokio::process::Command as TokioCommand;
 use futures_util::future::join_all;

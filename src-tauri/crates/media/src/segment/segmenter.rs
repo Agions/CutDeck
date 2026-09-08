@@ -17,6 +17,12 @@ pub struct SmartSegmenter {
     ffprobe_path: String,
 }
 
+impl Default for SmartSegmenter {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl SmartSegmenter {
     pub fn new() -> Self {
         Self {
@@ -115,7 +121,7 @@ impl SmartSegmenter {
 
     pub fn probe_duration_ms(&self, video_path: &str) -> Result<u64, String> {
         let output = Command::new(&self.ffprobe_path)
-            .args(&[
+            .args([
                 "-v", "error",
                 "-show_entries", "format=duration",
                 "-of", "default=noprint_wrappers=1:nokey=1",
@@ -138,7 +144,7 @@ impl SmartSegmenter {
 
     pub fn detect_scene_changes(&self, video_path: &str, threshold: f32) -> Vec<u64> {
         let stderr = Command::new(&self.ffmpeg_path)
-            .args(&[
+            .args([
                 "-hide_banner",
                 "-i", video_path,
                 "-vf", &format!("scdet=threshold={:.2}", threshold),
@@ -159,7 +165,7 @@ impl SmartSegmenter {
             .join(format!("fablr_seg_audio_{}.wav", chrono_like_timestamp()));
 
         let output = Command::new(&self.ffmpeg_path)
-            .args(&[
+            .args([
                 "-y", "-i", video_path,
                 "-vn",
                 "-acodec", "pcm_s16le",
